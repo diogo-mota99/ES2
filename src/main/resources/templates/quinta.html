@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quinta</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+
+    <style>
+        .w3-sidebar a {
+            font-family: "Roboto", sans-serif
+        }
+
+        body, h1, h2, h3, h4, h5, h6, .w3-wide {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 400px;
+        }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background: #eee;
+        }
+
+
+    </style>
+</head>
+<body class="w3-content" style="max-width:1200px">
+
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+    <div class="w3-container w3-display-container w3-padding-16">
+        <h3 class="w3-wide"><b>MENU</b></h3></div>
+    <div class="w3-padding-20 w3-large w3-text-grey" style="font-weight:bold">
+        <a href="#" class="w3-bar-item w3-button">Quintas</a>
+        <a href="#" class="w3-bar-item w3-button">Funcionários</a>
+        <a href="#" class="w3-bar-item w3-button">Plantações</a>
+        <a href="#" class="w3-bar-item w3-button">Vindimas</a>
+        <a href="#" class="w3-bar-item w3-button">Controlos</a>
+        <a href="#" class="w3-bar-item w3-button">Avaliações</a>
+        <a href="#" class="w3-bar-item w3-button">Embalamentos</a>
+        <a href="/dashboard" class="w3-bar-item w3-button w3-margin-top">Página Inicial</a>
+    </div>
+</nav>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:250px">
+
+    <!-- Push down content on small screens -->
+    <div class="w3-hide-large" style="margin-top:83px"></div>
+
+    <!-- Top header -->
+    <header class="w3-container w3-xlarge">
+        <p class="w3-center">
+            <strong>Quintas</strong>
+        </p>
+    </header>
+
+    <!-- Fixed header table-->
+    <div class="tableFixHead w3-margin-bottom">
+        <table>
+            <thead>
+            <tr>
+                <th>Num</th>
+                <th>Área (km2)</th>
+                <th>Localização</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="quinta : ${listaQuintas}">
+                <tr>
+                    <td th:text="${quinta.getIdQuinta()}"></td>
+                    <td th:text="${quinta.getAreaQuinta()}"></td>
+                    <td th:text="${quinta.getLocalizacao()}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div><!-- End -->
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal">
+        <span onclick="document.getElementById('id01').style.display='none'"
+              class="w3-button w3-display-topright">&times;</span>
+                <h2 class="w3-center">Adicionar quinta</h2>
+            </header>
+            <div class="w3-container w3-padding-64">
+                <form name="formAdd" onsubmit="return validateForm()">
+                    <input type="hidden" id="idEmpresa" name="idEmpresa" th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}">
+                    <div class="form-group">
+                        <label for="area">Área</label>
+                        <input type="number" step="0.01" class="form-control" name="area" id="area"
+                               placeholder="Insira um área">
+                    </div>
+                    <div class="form-group">
+                        <label for="localizacao">Localização</label>
+                        <input type="text" class="form-control" id="localizacao" name="localizacao"
+                               placeholder="Localização">
+                    </div>
+                    <button type="submit" class="btn btn-success">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-center w3-margin-bottom">
+        <button onclick="document.getElementById('id01').style.display='block'"
+                class="w3-btn w3-ripple w3-green w3-round w3-margin-bottom">Adicionar Quinta
+        </button>
+        <button class="w3-btn w3-ripple w3-blue w3-round w3-margin-bottom">Editar Quinta</button>
+        <button class="w3-btn w3-ripple w3-red w3-round w3-margin-bottom">Remover Quinta</button>
+    </div>
+
+    <div class="w3-black w3-center w3-padding-24">Powered by <b>Diogo Mota Nº20778 & Hugo Simão Nº20752</b>
+    </div>
+
+</div>
+
+<script>
+    function validateForm() {
+        var x = document.forms["formAdd"]["area"].value;
+        var y = document.forms["formAdd"]["localizacao"].value;
+        if (x === "" || y === "") {
+            alert("Todos os campos devem ser preenchidos!");
+            return false;
+        }
+    }
+</script>
+
+</body>
+</html>

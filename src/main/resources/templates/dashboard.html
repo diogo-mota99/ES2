@@ -1,0 +1,110 @@
+<!DOCTYPE html >
+<html lang="en">
+<title>Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .w3-sidebar a {
+        font-family: "Roboto", sans-serif
+    }
+
+    body, h1, h2, h3, h4, h5, h6, .w3-wide {
+        font-family: "Montserrat", sans-serif;
+    }
+</style>
+<body class="w3-content" style="max-width:1200px">
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+    <div class="w3-container w3-display-container w3-padding-16">
+        <h3 class="w3-wide"><b>MENU</b></h3></div>
+    <div class="w3-padding-20 w3-large w3-text-grey" style="font-weight:bold">
+        <a href="/quinta" class="w3-bar-item w3-button">Quintas</a>
+        <a href="#" class="w3-bar-item w3-button">Funcionários</a>
+        <a href="#" class="w3-bar-item w3-button">Plantações</a>
+        <a href="#" class="w3-bar-item w3-button">Vindimas</a>
+        <a href="#" class="w3-bar-item w3-button">Controlos</a>
+        <a href="#" class="w3-bar-item w3-button">Avaliações</a>
+        <a href="#" class="w3-bar-item w3-button">Embalamentos</a>
+        <a href="#" class="w3-bar-item w3-button w3-margin-top">Página Inicial</a>
+    </div>
+</nav>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:250px">
+
+    <!-- Push down content on small screens -->
+    <div class="w3-hide-large" style="margin-top:83px"></div>
+
+    <!-- Top header -->
+    <header class="w3-container w3-xlarge">
+        <p class="w3-left">
+            <strong th:text="${funcionario.getIdEmpresa().getNomeEmpresa()}"></strong>
+        </p>
+        <p class="w3-right" th:text="'Bem-vindo, ' + ${funcionario.getNome()}"></p>
+    </header>
+
+    <!-- Product grid -->
+    <div class="w3-row w3-grayscale">
+        <div class="w3-col l3 s6">
+            <div class="w3-container">
+                <img src="/static/images/farm.png" th:src="@{images/farm.png}" style="width:100%" alt="">
+                <p class="w3-center">Quintas <b th:text="${funcionario.getIdEmpresa().getQuintaList().size()}"></b></p>
+            </div>
+            <div class="w3-container">
+                <img src="/static/images/vindima.png" th:src="@{images/vindima.png}" style="width:100%" alt="">
+                <p class="w3-center">Vindimas <b th:text="${plantacaoVindima.size()}"></b></p>
+            </div>
+        </div>
+
+        <div class="w3-col l3 s6">
+            <div class="w3-container">
+                <img src="/static/images/farmer.png" th:src="@{images/farmer.png}" style="width:100%" alt="">
+                <p class="w3-center">Funcionários <b th:text="${listFuncionario.size()}"></b></p>
+            </div>
+            <div class="w3-container">
+                <img src="/static/images/sucess.png" th:src="@{images/sucess.png}" style="width:80%" alt="">
+                <p class="w3-center">Controlos bem sucedidos <b th:text="${listControlo.size()}"></b></p>
+            </div>
+        </div>
+
+        <div class="w3-col l3 s6">
+            <div class="w3-container">
+                <img src="/static/images/vinhas.png" th:src="@{images/vinhas.png}" style="width:90%" alt="">
+                <p class="w3-center">Plantações ativas <b th:text="${plantacaoAtiva.size()}"></b></p>
+            </div>
+            <div class="w3-container">
+                <img src="/static/images/perc.png" th:src="@{images/perc.png}" style="width:90%" alt="">
+                <p class="w3-center">% de Controlos bem Sucedidos <b th:text="${controlosBemSUcedicos}"></b></p>
+            </div>
+        </div>
+
+        <div class="w3-col l3 s6">
+            <div class="w3-container">
+                <img src="/static/images/grape.png" th:src="@{images/grape.png}" style="width:100%" alt="">
+                <p class="w3-center">Castas <b th:text="${listaCastas.size()}"></b></p>
+            </div>
+            <div class="w3-container">
+                <img src="/static/images/box.png" th:src="@{images/box.png}" style="width:90%" alt="">
+                <p class="w3-center">Caixas Produzidas <b th:text="${listaProdutoFinal.getQtdCaixas}"></b></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-black w3-center w3-padding-24">Powered by <b>Diogo Mota Nº20778 & Hugo Simão Nº20752</b>
+    </div>
+
+    <!-- End page content -->
+</div>
+
+<script>
+    // Click on the "Jeans" link on page load to open the accordion for demo purposes
+    //document.getElementById("myBtn").click();
+</script>
+
+</body>
+</html>
