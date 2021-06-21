@@ -3,8 +3,6 @@ package SpringWebMVC.ES2.BLL;
 import SpringWebMVC.ES2.entityManager;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +28,7 @@ public class Empresa {
         boolean exist = false;
 
         Query q = em.createNamedQuery("Empresa.findByIdEmpresa");
+        q.setParameter("idEmpresa", idEmpresa);
 
         if (q.getSingleResult() != null) {
             empresa = (SpringWebMVC.ES2.DAL.Empresa) q.getSingleResult();

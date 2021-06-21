@@ -117,16 +117,17 @@
     <div id="id01" class="w3-modal">
         <div class="w3-modal-content w3-card-4">
             <header class="w3-container w3-teal">
-        <span onclick="document.getElementById('id01').style.display='none'"
+        <span onclick="closeModal()"
               class="w3-button w3-display-topright">&times;</span>
                 <h2 class="w3-center">Adicionar quinta</h2>
             </header>
             <div class="w3-container w3-padding-64">
-                <form name="formAdd" onsubmit="return validateForm()">
-                    <input type="hidden" id="idEmpresa" name="idEmpresa" th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}">
+                <form name="formAdd" id="formAdd" onsubmit="return validateForm()" action="/addQuinta" method="post">
+                    <input type="hidden" id="idEmpresa" name="idEmpresa"
+                           th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}">
                     <div class="form-group">
                         <label for="area">Área</label>
-                        <input type="number" step="0.01" class="form-control" name="area" id="area"
+                        <input type="number" min="0.01" step="0.01" class="form-control" name="area" id="area"
                                placeholder="Insira um área">
                     </div>
                     <div class="form-group">
@@ -140,11 +141,50 @@
         </div>
     </div>
 
+    <div id="id02" class="w3-modal">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal">
+        <span onclick="closeModalEdit()"
+              class="w3-button w3-display-topright">&times;</span>
+                <h2 class="w3-center">Editar Quinta</h2>
+            </header>
+            <div class="w3-container w3-padding-64">
+                <form name="formEdit" id="formEdit" onsubmit="return validateFormEdit()" action="/editQuinta"
+                      method="post">
+                    <div class="form-group">
+                        <label for="selectQuinta">Quinta</label>
+                        <select class="form-control" id="selectQuinta" name="selectQuinta"
+                                th:onchange="'changeQuinta(\'' + ${listaQuintas} +'\',\' + this.value)'">
+                            <th:block th:each="quinta : ${listaQuintas}">
+                                <option th:value="${quinta.getIdQuinta()}" th:text="${quinta.getIdQuinta()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <input type="hidden" id="idEmpresaEdit" name="idEmpresaEdit"
+                           th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}">
+                    <div class="form-group">
+                        <label for="areaEdit">Área</label>
+                        <input type="number" min="0.01" step="0.01" class="form-control" name="areaEdit" id="areaEdit"
+                               placeholder="Insira um área">
+                    </div>
+                    <div class="form-group">
+                        <label for="localizacaoEdit">Localização</label>
+                        <input type="text" class="form-control" id="localizacaoEdit" name="localizacaoEdit"
+                               placeholder="Localização">
+                    </div>
+                    <button type="submit" class="btn btn-success">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div class="w3-center w3-margin-bottom">
         <button onclick="document.getElementById('id01').style.display='block'"
                 class="w3-btn w3-ripple w3-green w3-round w3-margin-bottom">Adicionar Quinta
         </button>
-        <button class="w3-btn w3-ripple w3-blue w3-round w3-margin-bottom">Editar Quinta</button>
+        <button onclick="document.getElementById('id02').style.display='block'"
+                class="w3-btn w3-ripple w3-blue w3-round w3-margin-bottom">Editar Quinta
+        </button>
         <button class="w3-btn w3-ripple w3-red w3-round w3-margin-bottom">Remover Quinta</button>
     </div>
 
@@ -155,12 +195,38 @@
 
 <script>
     function validateForm() {
-        var x = document.forms["formAdd"]["area"].value;
-        var y = document.forms["formAdd"]["localizacao"].value;
+        var x, y;
+
+        x = document.getElementById("area").value;
+        y = document.getElementById("localizacao").value;
+
         if (x === "" || y === "") {
             alert("Todos os campos devem ser preenchidos!");
             return false;
+        } else if (isNaN(x) || x < 0.01) {
+            alert("A área deve ser superior a 0.01 km2");
+            return false;
         }
+    }
+
+    function changeQuinta(lista, valor) {
+        var x = document.getElementById("areaEdit");
+        var y = document.getElementById("localizacaoEdit");
+
+        alert("o valor é " + valor);
+    }
+
+    function validateFormEdit() {
+
+    }
+
+    function closeModal() {
+        document.getElementById('id01').style.display = 'none';
+        document.getElementById("formAdd").reset();
+    }
+
+    function closeModalEdit() {
+        document.getElementById('id02').style.display = 'none';
     }
 </script>
 

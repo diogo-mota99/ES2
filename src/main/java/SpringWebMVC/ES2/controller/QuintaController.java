@@ -34,8 +34,13 @@ public class QuintaController {
     public ModelAndView addQuinta(HttpServletResponse response, HttpServletRequest request) throws IOException {
         ModelAndView mview = null;
 
+        int idEmpresa = Integer.parseInt(request.getParameter("idEmpresa"));
         String area = request.getParameter("area");
         String localizacao = request.getParameter("localizacao");
+
+        SpringWebMVC.ES2.BLL.Quinta.adicionarQuinta(area, localizacao, idEmpresa);
+
+        mview = new ModelAndView("redirect:/quinta");
 
         return mview;
     }
