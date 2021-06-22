@@ -57,6 +57,26 @@
             background: #eee;
         }
 
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: fit-content;
+            height: fit-content;
+            z-index: 9999;
+        }
+
+        .blackOpacity {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 9000;
+            background: rgba(0, 0, 0, 0.5);
+        }
 
     </style>
 </head>
@@ -131,7 +151,8 @@
             <div class="w3-container w3-padding-64">
                 <form action="/addFuncionario" id="formAdd" method="post" name="formAdd"
                       onsubmit="return validateForm()">
-                    <input id="idEmpresa" name="idEmpresa" th:value="${listaFuncionarios.get(0).getIdEmpresa().getIdEmpresa()}"
+                    <input id="idEmpresa" name="idEmpresa"
+                           th:value="${listaFuncionarios.get(0).getIdEmpresa().getIdEmpresa()}"
                            type="hidden">
                     <div class="form-group">
                         <label for="selectTipoFuncionario">Cargo</label>
@@ -272,7 +293,7 @@
             </header>
             <div class="w3-container w3-padding-64">
                 <form action="/removeFuncionario" id="formRemove" method="post"
-                      name="formRemove">
+                      name="formRemove" onsubmit="showLoadRemove()">
                     <div class="form-group">
                         <label for="selectFuncionarioRemove">Funcionário</label>
                         <select class="form-control" id="selectFuncionarioRemove" name="selectFuncionarioRemove">
@@ -302,19 +323,54 @@
 
     <div class="w3-black w3-center w3-padding-24">Powered by <b>Diogo Mota Nº20778 & Hugo Simão Nº20752</b>
     </div>
+</div>
 
+<div class="card text-dark bg-light mb-3 loading-spinner text-center" id="loadingSpinner"
+     style="max-width: 18rem; display: none">
+    <div class="card-body">
+        <div class="spinner-border text-info" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<div class="blackOpacity" id="divOpacity" style="display: none">
 </div>
 
 <script th:inline="javascript">
     //<![CDATA[
     const listaJSON = /*[[${listaFuncionarios}]]*/'Funcionarios';
+    var msg = /*[[${msg}]]*/'msg';
     //]]>
     const JSON_Stringify = JSON.stringify(listaJSON);
 </script>
 
-<script>
+
+<script type="text/javascript">
+
+    $(window).on('load', function () {
+        if (msg != null) {
+            if (msg.localeCompare("erroAddFunc") == 0) {
+                alert('Username já existe!');
+            } else if (msg.localeCompare("sucessoAddFunc") == 0) {
+                alert('Funcionário adicionado com sucesso!');
+            } else if (msg.localeCompare("sucessoRemoveFunc") == 0) {
+                alert('Funcionário removido com sucesso!');
+            } else if (msg.localeCompare("erroRemoveFunc") == 0) {
+                alert('Erro ao remover funcionário!');
+            } else if (msg.localeCompare("erroUpdateFunc") == 0) {
+                alert('Erro ao atualizar funcionário!');
+            } else if (msg.localeCompare("sucessoUpdateFunc") == 0) {
+                alert('Funcionario atualizado com sucesso!');
+            }
+        }
+    });
+
+
     function validateForm() {
         let usr, pw, name, mail, tlm, rua, porta, cp;
+        const load = document.getElementById('loadingSpinner');
+        const opacity = document.getElementById('divOpacity');
 
         usr = document.getElementById("username").value;
         pw = document.getElementById("password").value;
@@ -335,11 +391,16 @@
         } else if (!pattern.test(cp)) {
             alert("Deve introduzir um código postal válido!");
             return false;
+        } else {
+            load.style.display = 'block'
+            opacity.style.display = 'block'
         }
     }
 
     function validateFormEdit() {
         let usr, pw, name, mail, tlm, rua, porta, cp;
+        const load = document.getElementById('loadingSpinner');
+        const opacity = document.getElementById('divOpacity');
 
         usr = document.getElementById("usernameEdit").value;
         pw = document.getElementById("passwordEdit").value;
@@ -351,12 +412,18 @@
         cp = document.getElementById("codPostalEdit").value;
         const pattern = /[0-9]{4}-[0-9]{3}/g;
 
-        if (usr == "" || pw == "" || name == "" || mail == "" || tlm == "" || rua == "" || porta == "" || cp == "") {
+        if (pw == "" || name == "" || mail == "" || tlm == "" || rua == "" || porta == "" || cp == "") {
             alert("Todos os campos devem ser preenchidos!");
+            return false;
+        } else if (pw.length < 6) {
+            alert("A password deve ter mais que 6 caracteres!");
             return false;
         } else if (!pattern.test(cp)) {
             alert("Deve introduzir um código postal válido!");
             return false;
+        } else {
+            load.style.display = 'block'
+            opacity.style.display = 'block'
         }
     }
 
@@ -427,6 +494,13 @@
                 cargo.value = lista[i]["tipoFuncionario"]["id"];
             }
         }
+    }
+
+    function showLoadRemove() {
+        const load = document.getElementById('loadingSpinner');
+        const opacity = document.getElementById('divOpacity');
+        load.style.display = 'block'
+        opacity.style.display = 'block'
     }
 </script>
 

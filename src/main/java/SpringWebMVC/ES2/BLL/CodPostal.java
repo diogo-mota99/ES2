@@ -40,12 +40,18 @@ public class CodPostal {
         return cp;
     }
 
-    public static void adicionarCodPostal(String codPostal) {
+    public static boolean adicionarCodPostal(String codPostal) {
 
-        SpringWebMVC.ES2.DAL.CodPostal cp = new SpringWebMVC.ES2.DAL.CodPostal();
-        cp.setCodPostal(codPostal);
-        em.getTransaction().begin();
-        em.persist(cp);
-        em.getTransaction().commit();
+        try {
+            SpringWebMVC.ES2.DAL.CodPostal cp = new SpringWebMVC.ES2.DAL.CodPostal();
+            cp.setCodPostal(codPostal);
+            em.getTransaction().begin();
+            em.persist(cp);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            return false;
+        }
+
+        return true;
     }
 }

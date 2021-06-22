@@ -24,18 +24,25 @@ public class LoginController {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
-        Funcionario funcionario = SpringWebMVC.ES2.BLL.Funcionario.funcionarioLogin(
-                username, password
-        );
-
+        Funcionario funcionario = null;
+        String msg = "";
         ModelAndView mview;
-        String msg;
+
+
+        if (!username.equals("admin")) {
+            msg = "erroAdmin";
+            mview = new ModelAndView("redirect:/index");
+            mview.addObject(msg);
+        } else {
+            funcionario = SpringWebMVC.ES2.BLL.Funcionario.funcionarioLogin(
+                    username, password
+            );
+        }
 
         if (funcionario == null) {
-            msg = "Username ou password errados!";
-            mview = new ModelAndView("errorPage");
-            mview.addObject("message", msg);
+            msg = "erroLogin";
+            mview = new ModelAndView("redirect:/index");
+            redirectAttributes.addFlashAttribute("msg", msg);
         } else {
             mview = new ModelAndView("redirect:/dashboard");
             redirectAttributes.addFlashAttribute("funcionario", funcionario);

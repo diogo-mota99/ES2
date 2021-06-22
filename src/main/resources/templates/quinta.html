@@ -57,6 +57,27 @@
             background: #eee;
         }
 
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: fit-content;
+            height: fit-content;
+            z-index: 9999;
+        }
+
+        .blackOpacity {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 9000;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
 
     </style>
 </head>
@@ -124,11 +145,13 @@
             </header>
             <div class="w3-container w3-padding-64">
                 <form action="/addQuinta" id="formAdd" method="post" name="formAdd" onsubmit="return validateForm()">
-                    <input id="idEmpresa" name="idEmpresa" th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}"
+                    <input id="idEmpresa" name="idEmpresa"
+                           th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}"
                            type="hidden">
                     <div class="form-group">
                         <label for="area">Área</label>
-                        <input class="form-control" id="area" min="0.01" name="area" placeholder="Insira um área" step="0.01"
+                        <input class="form-control" id="area" min="0.01" name="area" placeholder="Insira um área"
+                               step="0.01"
                                type="number">
                     </div>
                     <div class="form-group">
@@ -163,12 +186,14 @@
                     </div>
                     <div class="form-group">
                         <label for="areaEdit">Área</label>
-                        <input class="form-control" id="areaEdit" min="0.01" name="areaEdit" placeholder="Insira um área" step="0.01"
+                        <input class="form-control" id="areaEdit" min="0.01" name="areaEdit"
+                               placeholder="Insira um área" step="0.01"
                                type="number">
                     </div>
                     <div class="form-group">
                         <label for="localizacaoEdit">Localização</label>
-                        <input class="form-control" id="localizacaoEdit" name="localizacaoEdit" placeholder="Localização"
+                        <input class="form-control" id="localizacaoEdit" name="localizacaoEdit"
+                               placeholder="Localização"
                                type="text">
                     </div>
                     <button class="btn btn-success" type="submit">Editar</button>
@@ -186,7 +211,7 @@
             </header>
             <div class="w3-container w3-padding-64">
                 <form action="/removeQuinta" id="formRemove" method="post"
-                      name="formRemove">
+                      name="formRemove" onsubmit="showLoadDelete()">
                     <div class="form-group">
                         <label for="selectQuintaRemove">Quinta</label>
                         <select class="form-control" id="selectQuintaRemove" name="selectQuintaRemove">
@@ -215,21 +240,58 @@
     <div class="w3-black w3-center w3-padding-24">Powered by <b>Diogo Mota Nº20778 & Hugo Simão Nº20752</b>
     </div>
 
+    <div class="card text-dark bg-light mb-3 loading-spinner text-center" id="loadingSpinner"
+         style="max-width: 18rem; display: none">
+        <div class="card-body">
+            <div class="spinner-border text-info" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="blackOpacity" id="divOpacity" style="display: none">
+    </div>
+
+
 </div>
 
 <script th:inline="javascript">
     //<![CDATA[
     const listaJSON = /*[[${listaQuintas}]]*/'Quintas';
+    let msg = /*[[${msg}]]*/'msg';
     //]]>
     const JSON_Stringify = JSON.stringify(listaJSON);
 </script>
 
-<script>
+
+<script type="text/javascript">
+
+    $(window).on('load', function () {
+        console.log(msg);
+        if (msg != null) {
+            if (msg.localeCompare("erroAddQuinta") == 0) {
+                alert('Erro ao adicionar quinta!');
+            } else if (msg.localeCompare("sucessoAddQuinta") == 0) {
+                alert('Quinta adicionada com sucesso!');
+            } else if (msg.localeCompare("erroUpdateQuinta") == 0) {
+                alert('Erro ao atualizar quinta');
+            } else if (msg.localeCompare("sucessoUpdateQuinta") == 0) {
+                alert('Quinta atualizada com sucesso!');
+            } else if (msg.localeCompare("erroRemoveQuinta") == 0) {
+                alert('Erro ao remover quinta');
+            } else if (msg.localeCompare("sucessoRemoveQuinta") == 0) {
+                alert('Quinta removida com sucesso!');
+            }
+        }
+    });
+
     function validateForm() {
         var area, localizacao;
 
         area = document.getElementById("area").value;
         localizacao = document.getElementById("localizacao").value;
+        const load = document.getElementById('loadingSpinner');
+        const opacity = document.getElementById('divOpacity');
 
         if (area == "" || localizacao == "") {
             alert("Todos os campos devem ser preenchidos!");
@@ -237,6 +299,9 @@
         } else if (isNaN(area) || area < 0.01) {
             alert("A área deve ser superior a 0.01 km2");
             return false;
+        } else {
+            load.style.display = 'block'
+            opacity.style.display = 'block'
         }
     }
 
@@ -245,6 +310,8 @@
 
         area = document.getElementById("areaEdit").value;
         localizacao = document.getElementById("localizacaoEdit").value;
+        const load = document.getElementById('loadingSpinner');
+        const opacity = document.getElementById('divOpacity');
 
         if (area == "" || localizacao == "") {
             alert("Todos os campos devem ser preenchidos!");
@@ -252,6 +319,9 @@
         } else if (isNaN(area) || area < 0.01) {
             alert("A área deve ser superior a 0.01 km2");
             return false;
+        } else {
+            load.style.display = 'block'
+            opacity.style.display = 'block'
         }
     }
 
@@ -300,6 +370,13 @@
                 localizacao.value = lista[i]["localizacao"];
             }
         }
+    }
+
+    function showLoadDelete() {
+        const load = document.getElementById('loadingSpinner');
+        const opacity = document.getElementById('divOpacity');
+        load.style.display = 'block'
+        opacity.style.display = 'block'
     }
 </script>
 

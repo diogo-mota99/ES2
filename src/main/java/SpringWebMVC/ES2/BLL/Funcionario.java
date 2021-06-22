@@ -69,7 +69,9 @@ public class Funcionario {
         return funcionario;
     }
 
-    public static void adicionarFuncionario(int idEmpresa, int cargo, String username, String pw, String nome, String email, String tlm, String rua, int porta, String cp) {
+    public static boolean adicionarFuncionario(int idEmpresa, int cargo, String username, String pw, String nome, String email, String tlm, String rua, int porta, String cp) {
+
+        System.out.println(username);
 
         SpringWebMVC.ES2.DAL.Funcionario func = SpringWebMVC.ES2.BLL.Funcionario.funcionarioByUsername(username);
 
@@ -79,18 +81,36 @@ public class Funcionario {
             SpringWebMVC.ES2.DAL.CodPostal codPostal = SpringWebMVC.ES2.BLL.CodPostal.readByCodPostal(cp);
 
             if (codPostal == null) {
-                SpringWebMVC.ES2.BLL.CodPostal.adicionarCodPostal(cp);
+                try {
+                    SpringWebMVC.ES2.BLL.CodPostal.adicionarCodPostal(cp);
+                } catch (Exception e) {
+                    return false;
+                }
+
                 SpringWebMVC.ES2.DAL.CodPostal newCodPostal = SpringWebMVC.ES2.BLL.CodPostal.readByCodPostal(cp);
-                funcionarioAdd(username, pw, nome, email, tlm, rua, porta, empresa, tipoFuncionario, newCodPostal);
+
+                if (newCodPostal != null) {
+                    try {
+                        funcionarioAdd(username, pw, nome, email, tlm, rua, porta, empresa, tipoFuncionario, newCodPostal);
+                    } catch (Exception e) {
+                        return false;
+                    }
+                }
             } else {
-                funcionarioAdd(username, pw, nome, email, tlm, rua, porta, empresa, tipoFuncionario, codPostal);
+                try {
+                    funcionarioAdd(username, pw, nome, email, tlm, rua, porta, empresa, tipoFuncionario, codPostal);
+                } catch (Exception e) {
+                    return false;
+                }
             }
+        } else {
+            return false;
         }
 
-
+        return true;
     }
 
-    public static void updateFuncionario(int idFuncionario, int cargo, String pw, String nome, String email, String tlm, String rua, int porta, String cp) {
+    public static boolean updateFuncionario(int idFuncionario, int cargo, String pw, String nome, String email, String tlm, String rua, int porta, String cp) {
 
         SpringWebMVC.ES2.DAL.TipoFuncionario tipoFuncionario = SpringWebMVC.ES2.BLL.TipoFuncionario.readTipoFuncionarioById(cargo);
         SpringWebMVC.ES2.DAL.CodPostal codPostal = SpringWebMVC.ES2.BLL.CodPostal.readByCodPostal(cp);
@@ -98,12 +118,28 @@ public class Funcionario {
 
 
         if (codPostal == null && f != null) {
-            SpringWebMVC.ES2.BLL.CodPostal.adicionarCodPostal(cp);
+            try {
+                SpringWebMVC.ES2.BLL.CodPostal.adicionarCodPostal(cp);
+            } catch (Exception e) {
+                return false;
+            }
             SpringWebMVC.ES2.DAL.CodPostal newCodPostal = SpringWebMVC.ES2.BLL.CodPostal.readByCodPostal(cp);
-            funcionarioUpdate(f, pw, nome, email, tlm, rua, porta, tipoFuncionario, newCodPostal);
+            if (newCodPostal != null) {
+                try {
+                    funcionarioUpdate(f, pw, nome, email, tlm, rua, porta, tipoFuncionario, newCodPostal);
+                } catch (Exception e) {
+                    return false;
+                }
+            }
         } else if (f != null) {
-            funcionarioUpdate(f, pw, nome, email, tlm, rua, porta, tipoFuncionario, codPostal);
+            try {
+                funcionarioUpdate(f, pw, nome, email, tlm, rua, porta, tipoFuncionario, codPostal);
+            } catch (Exception e) {
+                return false;
+            }
         }
+
+        return true;
     }
 
     private static void funcionarioUpdate(SpringWebMVC.ES2.DAL.Funcionario f, String pw, String nome, String email, String tlm, String rua, int porta, SpringWebMVC.ES2.DAL.TipoFuncionario tipoFuncionario, SpringWebMVC.ES2.DAL.CodPostal newCodPostal) {
@@ -142,13 +178,18 @@ public class Funcionario {
     }
 
 
-    public static void removeFuncionario(int idFuncionario) {
+    public static boolean removeFuncionario(int idFuncionario) {
         SpringWebMVC.ES2.DAL.Funcionario funcionario = em.find(SpringWebMVC.ES2.DAL.Funcionario.class, idFuncionario);
 
         if (funcionario != null) {
-            em.getTransaction().begin();
-            funcionario.setEstado(0);
-            em.getTransaction().commit();
+            try {
+                em.getTransaction().begin();
+                funcionario.setEstado(0);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                return false;
+            }
         }
+        return true;
     }
 }

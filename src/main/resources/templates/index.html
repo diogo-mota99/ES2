@@ -18,39 +18,72 @@
 
     <link crossorigin="anonymous" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
           integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" rel="stylesheet"/>
+
+    <style>
+        .loading-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: fit-content;
+            height: fit-content;
+            z-index: 9999;
+        }
+
+        .blackOpacity {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            z-index: 9000;
+            background: rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </head>
 <body>
 <h1 align="center">Login</h1>
 <div class="container">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 mt-5">
-                <form action="/login" method="post">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <div class="input-group">
-                            <input autocomplete="off" class="form-control" id="username" name="username" type="text"/>
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fas fa-user-lock"></i></span>
-                            </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 mt-5">
+            <form action="/login" method="post" onsubmit="showLoad()">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-group">
+                        <input autocomplete="off" class="form-control" id="username" name="username" type="text"/>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i class="fas fa-user-lock"></i></span>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <div class="input-group" id="show_hide_password">
-                            <input autocomplete="off" class="form-control" id="password" name="password"
-                                   type="password"/>
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i aria-hidden="true" class="fa fa-eye-slash"></i></span>
-                            </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-group" id="show_hide_password">
+                        <input autocomplete="off" class="form-control" id="password" name="password"
+                               type="password"/>
+                        <div class="input-group-append">
+                            <span class="input-group-text"><i aria-hidden="true" class="fa fa-eye-slash"></i></span>
                         </div>
                     </div>
+                </div>
 
-                    <button class="btn btn-primary" type="submit">Login</button>
-                </form>
-            </div>
+                <button class="btn btn-primary" type="submit">Login</button>
+            </form>
         </div>
     </div>
+</div>
+
+<div class="card text-dark bg-light mb-3 loading-spinner text-center" id="loadingSpinner"
+     style="max-width: 18rem; display: none">
+    <div class="card-body">
+        <div class="spinner-border text-info" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+
+<div class="blackOpacity" id="divOpacity" style="display: none">
 </div>
 
 
@@ -64,7 +97,26 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-<script>
+
+<script th:inline="javascript">
+    //<![CDATA[
+    var msg = /*[[${msg}]]*/'msg';
+    //]]>
+</script>
+
+<script type="text/javascript">
+
+    $(window).on('load', function () {
+        if (msg != null) {
+            if (msg.localeCompare("erroAdmin") == 0) {
+                alert('Não tem permissões para entrar!');
+            } else if (msg.localeCompare("erroLogin") == 0) {
+                alert('Username ou password inválidos!');
+            }
+        }
+    });
+
+
     var input = $("#show_hide_password input");
     var icon = $("#show_hide_password i");
 
@@ -82,6 +134,14 @@
             icon.addClass("fa-eye");
         }
     });
+
+
+    function showLoad() {
+        const load = document.getElementById('loadingSpinner');
+        const opacity = document.getElementById('divOpacity');
+        load.style.display = 'block'
+        opacity.style.display = 'block'
+    }
 </script>
 </body>
 </html>

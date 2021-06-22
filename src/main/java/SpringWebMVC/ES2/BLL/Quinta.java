@@ -31,39 +31,64 @@ public class Quinta {
         return listaQuintasByEmpresaByEstado;
     }
 
-    public static void adicionarQuinta(String area, String localizacao, int idEmpresa) {
+    public static boolean adicionarQuinta(String area, String localizacao, int idEmpresa) {
 
         Empresa empresa = SpringWebMVC.ES2.BLL.Empresa.readEmpresaById(idEmpresa);
 
-        SpringWebMVC.ES2.DAL.Quinta qt = new SpringWebMVC.ES2.DAL.Quinta();
-        qt.setAreaQuinta(area);
-        qt.setLocalizacao(localizacao);
-        qt.setIdEmpresa(empresa);
-        qt.setAtiva(1);
+        if (empresa != null) {
+            SpringWebMVC.ES2.DAL.Quinta qt = new SpringWebMVC.ES2.DAL.Quinta();
+            qt.setAreaQuinta(area);
+            qt.setLocalizacao(localizacao);
+            qt.setIdEmpresa(empresa);
+            qt.setAtiva(1);
 
-        em.getTransaction().begin();
-        em.persist(qt);
-        em.getTransaction().commit();
+            try {
+                em.getTransaction().begin();
+                em.persist(qt);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
-    public static void updateQuinta(int idQuinta, String localizacao, String area) {
+    public static boolean updateQuinta(int idQuinta, String localizacao, String area) {
         SpringWebMVC.ES2.DAL.Quinta quinta = em.find(SpringWebMVC.ES2.DAL.Quinta.class, idQuinta);
 
         if (quinta != null) {
-            em.getTransaction().begin();
-            quinta.setLocalizacao(localizacao);
-            quinta.setAreaQuinta(area);
-            em.getTransaction().commit();
+            try {
+                em.getTransaction().begin();
+                quinta.setLocalizacao(localizacao);
+                quinta.setAreaQuinta(area);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
         }
+
+        return true;
     }
 
-    public static void removeQuinta(int idQuinta) {
+    public static boolean removeQuinta(int idQuinta) {
         SpringWebMVC.ES2.DAL.Quinta quinta = em.find(SpringWebMVC.ES2.DAL.Quinta.class, idQuinta);
 
         if (quinta != null) {
-            em.getTransaction().begin();
-            quinta.setAtiva(0);
-            em.getTransaction().commit();
+            try {
+                em.getTransaction().begin();
+                quinta.setAtiva(0);
+                em.getTransaction().commit();
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
         }
+        return true;
     }
 }
