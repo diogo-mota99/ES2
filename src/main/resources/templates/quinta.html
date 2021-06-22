@@ -2,26 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
     <title>Quinta</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
+    <script crossorigin="anonymous"
             integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
             integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-            crossorigin="anonymous"></script>
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
-          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <link crossorigin="anonymous" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" rel="stylesheet"/>
 
     <style>
         .w3-sidebar a {
@@ -64,18 +64,19 @@
 
 
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" id="mySidebar" style="z-index:3;width:250px">
     <div class="w3-container w3-display-container w3-padding-16">
         <h3 class="w3-wide"><b>MENU</b></h3></div>
     <div class="w3-padding-20 w3-large w3-text-grey" style="font-weight:bold">
-        <a href="#" class="w3-bar-item w3-button">Quintas</a>
-        <a href="#" class="w3-bar-item w3-button">Funcionários</a>
-        <a href="#" class="w3-bar-item w3-button">Plantações</a>
-        <a href="#" class="w3-bar-item w3-button">Vindimas</a>
-        <a href="#" class="w3-bar-item w3-button">Controlos</a>
-        <a href="#" class="w3-bar-item w3-button">Avaliações</a>
-        <a href="#" class="w3-bar-item w3-button">Embalamentos</a>
-        <a href="/dashboard" class="w3-bar-item w3-button w3-margin-top">Página Inicial</a>
+        <a class="w3-bar-item w3-button" href="#">Quintas</a>
+        <a class="w3-bar-item w3-button" href="/funcionario">Funcionários</a>
+        <a class="w3-bar-item w3-button" href="#">Plantações</a>
+        <a class="w3-bar-item w3-button" href="#">Vindimas</a>
+        <a class="w3-bar-item w3-button" href="#">Controlos</a>
+        <a class="w3-bar-item w3-button" href="#">Avaliações</a>
+        <a class="w3-bar-item w3-button" href="#">Embalamentos</a>
+        <a class="w3-bar-item w3-button w3-margin-top" href="/dashboard">Página Inicial</a>
+        <a class="w3-bar-item w3-button w3-margin-top" href="/logout">Logout</a>
     </div>
 </nav>
 
@@ -114,78 +115,101 @@
         </table>
     </div><!-- End -->
 
-    <div id="id01" class="w3-modal">
+    <div class="w3-modal" id="id01">
         <div class="w3-modal-content w3-card-4">
             <header class="w3-container w3-teal">
-        <span onclick="closeModal()"
-              class="w3-button w3-display-topright">&times;</span>
+        <span class="w3-button w3-display-topright"
+              onclick="closeModal()">&times;</span>
                 <h2 class="w3-center">Adicionar quinta</h2>
             </header>
             <div class="w3-container w3-padding-64">
-                <form name="formAdd" id="formAdd" onsubmit="return validateForm()" action="/addQuinta" method="post">
-                    <input type="hidden" id="idEmpresa" name="idEmpresa"
-                           th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}">
+                <form action="/addQuinta" id="formAdd" method="post" name="formAdd" onsubmit="return validateForm()">
+                    <input id="idEmpresa" name="idEmpresa" th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}"
+                           type="hidden">
                     <div class="form-group">
                         <label for="area">Área</label>
-                        <input type="number" min="0.01" step="0.01" class="form-control" name="area" id="area"
-                               placeholder="Insira um área">
+                        <input class="form-control" id="area" min="0.01" name="area" placeholder="Insira um área" step="0.01"
+                               type="number">
                     </div>
                     <div class="form-group">
                         <label for="localizacao">Localização</label>
-                        <input type="text" class="form-control" id="localizacao" name="localizacao"
-                               placeholder="Localização">
+                        <input class="form-control" id="localizacao" name="localizacao" placeholder="Localização"
+                               type="text">
                     </div>
-                    <button type="submit" class="btn btn-success">Adicionar</button>
+                    <button class="btn btn-success" type="submit">Adicionar</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <div id="id02" class="w3-modal">
+    <div class="w3-modal" id="id02">
         <div class="w3-modal-content w3-card-4">
             <header class="w3-container w3-teal">
-        <span onclick="closeModalEdit()"
-              class="w3-button w3-display-topright">&times;</span>
+        <span class="w3-button w3-display-topright"
+              onclick="closeModalEdit()">&times;</span>
                 <h2 class="w3-center">Editar Quinta</h2>
             </header>
             <div class="w3-container w3-padding-64">
-                <form name="formEdit" id="formEdit" onsubmit="return validateFormEdit()" action="/editQuinta"
-                      method="post">
+                <form action="/updateQuinta" id="formEdit" method="post" name="formEdit"
+                      onsubmit="return validateFormEdit()">
                     <div class="form-group">
                         <label for="selectQuinta">Quinta</label>
                         <select class="form-control" id="selectQuinta" name="selectQuinta"
-                                th:onchange="'changeQuinta(\'' + ${listaQuintas} +'\',\' + this.value)'">
+                                th:onchange="'changeQuinta()'">
                             <th:block th:each="quinta : ${listaQuintas}">
-                                <option th:value="${quinta.getIdQuinta()}" th:text="${quinta.getIdQuinta()}"></option>
+                                <option th:text="${quinta.getIdQuinta()}" th:value="${quinta.getIdQuinta()}"></option>
                             </th:block>
                         </select>
                     </div>
-                    <input type="hidden" id="idEmpresaEdit" name="idEmpresaEdit"
-                           th:value="${listaQuintas.get(0).getIdEmpresa().getIdEmpresa()}">
                     <div class="form-group">
                         <label for="areaEdit">Área</label>
-                        <input type="number" min="0.01" step="0.01" class="form-control" name="areaEdit" id="areaEdit"
-                               placeholder="Insira um área">
+                        <input class="form-control" id="areaEdit" min="0.01" name="areaEdit" placeholder="Insira um área" step="0.01"
+                               type="number">
                     </div>
                     <div class="form-group">
                         <label for="localizacaoEdit">Localização</label>
-                        <input type="text" class="form-control" id="localizacaoEdit" name="localizacaoEdit"
-                               placeholder="Localização">
+                        <input class="form-control" id="localizacaoEdit" name="localizacaoEdit" placeholder="Localização"
+                               type="text">
                     </div>
-                    <button type="submit" class="btn btn-success">Editar</button>
+                    <button class="btn btn-success" type="submit">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-modal" id="id03">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal">
+        <span class="w3-button w3-display-topright"
+              onclick="closeModalRemove()">&times;</span>
+                <h2 class="w3-center">Remover Quinta</h2>
+            </header>
+            <div class="w3-container w3-padding-64">
+                <form action="/removeQuinta" id="formRemove" method="post"
+                      name="formRemove">
+                    <div class="form-group">
+                        <label for="selectQuintaRemove">Quinta</label>
+                        <select class="form-control" id="selectQuintaRemove" name="selectQuintaRemove">
+                            <th:block th:each="quinta : ${listaQuintas}">
+                                <option th:text="${quinta.getIdQuinta()}" th:value="${quinta.getIdQuinta()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" type="submit">Remover</button>
                 </form>
             </div>
         </div>
     </div>
 
     <div class="w3-center w3-margin-bottom">
-        <button onclick="document.getElementById('id01').style.display='block'"
-                class="w3-btn w3-ripple w3-green w3-round w3-margin-bottom">Adicionar Quinta
+        <button class="w3-btn w3-ripple w3-green w3-round w3-margin-bottom"
+                onclick="openModalAdd()">Adicionar Quinta
         </button>
-        <button onclick="document.getElementById('id02').style.display='block'"
-                class="w3-btn w3-ripple w3-blue w3-round w3-margin-bottom">Editar Quinta
+        <button class="w3-btn w3-ripple w3-blue w3-round w3-margin-bottom"
+                onclick="openModalEdit()">Editar Quinta
         </button>
-        <button class="w3-btn w3-ripple w3-red w3-round w3-margin-bottom">Remover Quinta</button>
+        <button class="w3-btn w3-ripple w3-red w3-round w3-margin-bottom" onclick="openModalRemove()">Remover Quinta
+        </button>
     </div>
 
     <div class="w3-black w3-center w3-padding-24">Powered by <b>Diogo Mota Nº20778 & Hugo Simão Nº20752</b>
@@ -193,31 +217,46 @@
 
 </div>
 
+<script th:inline="javascript">
+    //<![CDATA[
+    const listaJSON = /*[[${listaQuintas}]]*/'Quintas';
+    //]]>
+    const JSON_Stringify = JSON.stringify(listaJSON);
+</script>
+
 <script>
     function validateForm() {
-        var x, y;
+        var area, localizacao;
 
-        x = document.getElementById("area").value;
-        y = document.getElementById("localizacao").value;
+        area = document.getElementById("area").value;
+        localizacao = document.getElementById("localizacao").value;
 
-        if (x === "" || y === "") {
+        if (area == "" || localizacao == "") {
             alert("Todos os campos devem ser preenchidos!");
             return false;
-        } else if (isNaN(x) || x < 0.01) {
+        } else if (isNaN(area) || area < 0.01) {
             alert("A área deve ser superior a 0.01 km2");
             return false;
         }
     }
 
-    function changeQuinta(lista, valor) {
-        var x = document.getElementById("areaEdit");
-        var y = document.getElementById("localizacaoEdit");
+    function validateFormEdit() {
+        var area, localizacao;
 
-        alert("o valor é " + valor);
+        area = document.getElementById("areaEdit").value;
+        localizacao = document.getElementById("localizacaoEdit").value;
+
+        if (area == "" || localizacao == "") {
+            alert("Todos os campos devem ser preenchidos!");
+            return false;
+        } else if (isNaN(area) || area < 0.01) {
+            alert("A área deve ser superior a 0.01 km2");
+            return false;
+        }
     }
 
-    function validateFormEdit() {
-
+    function openModalAdd() {
+        document.getElementById('id01').style.display = 'block'
     }
 
     function closeModal() {
@@ -227,6 +266,40 @@
 
     function closeModalEdit() {
         document.getElementById('id02').style.display = 'none';
+        document.getElementById("formEdit").reset();
+    }
+
+    function openModalRemove() {
+        document.getElementById('id03').style.display = 'block';
+    }
+
+    function closeModalRemove() {
+        document.getElementById('id03').style.display = 'none';
+    }
+
+
+    var idQuintaSelected = document.getElementById("selectQuinta");
+    var localizacao = document.getElementById("localizacaoEdit");
+    var area = document.getElementById("areaEdit");
+    const lista = JSON.parse(JSON_Stringify);
+
+    function openModalEdit() {
+        document.getElementById('id02').style.display = 'block'
+        for (let i = 0; i < lista.length; i++) {
+            if (idQuintaSelected.value == lista[i]["idQuinta"]) {
+                area.value = lista[i]["areaQuinta"];
+                localizacao.value = lista[i]["localizacao"];
+            }
+        }
+    }
+
+    function changeQuinta() {
+        for (let i = 0; i < lista.length; i++) {
+            if (idQuintaSelected.value == lista[i]["idQuinta"]) {
+                area.value = lista[i]["areaQuinta"];
+                localizacao.value = lista[i]["localizacao"];
+            }
+        }
     }
 </script>
 

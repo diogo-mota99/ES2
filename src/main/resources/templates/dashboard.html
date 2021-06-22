@@ -2,11 +2,11 @@
 <html lang="en">
 <title>Dashboard</title>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
     .w3-sidebar a {
         font-family: "Roboto", sans-serif
@@ -19,18 +19,19 @@
 <body class="w3-content" style="max-width:1200px">
 
 <!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" id="mySidebar" style="z-index:3;width:250px">
     <div class="w3-container w3-display-container w3-padding-16">
         <h3 class="w3-wide"><b>MENU</b></h3></div>
     <div class="w3-padding-20 w3-large w3-text-grey" style="font-weight:bold">
-        <a href="/quinta" class="w3-bar-item w3-button">Quintas</a>
-        <a href="#" class="w3-bar-item w3-button">Funcionários</a>
-        <a href="#" class="w3-bar-item w3-button">Plantações</a>
-        <a href="#" class="w3-bar-item w3-button">Vindimas</a>
-        <a href="#" class="w3-bar-item w3-button">Controlos</a>
-        <a href="#" class="w3-bar-item w3-button">Avaliações</a>
-        <a href="#" class="w3-bar-item w3-button">Embalamentos</a>
-        <a href="#" class="w3-bar-item w3-button w3-margin-top">Página Inicial</a>
+        <a class="w3-bar-item w3-button" href="/quinta">Quintas</a>
+        <a class="w3-bar-item w3-button" href="/funcionario#">Funcionários</a>
+        <a class="w3-bar-item w3-button" href="#">Plantações</a>
+        <a class="w3-bar-item w3-button" href="#">Vindimas</a>
+        <a class="w3-bar-item w3-button" href="#">Controlos</a>
+        <a class="w3-bar-item w3-button" href="#">Avaliações</a>
+        <a class="w3-bar-item w3-button" href="#">Embalamentos</a>
+        <a class="w3-bar-item w3-button w3-margin-top" href="#">Página Inicial</a>
+        <a class="w3-bar-item w3-button w3-margin-top" href="/logout">Logout</a>
     </div>
 </nav>
 
@@ -52,44 +53,44 @@
     <div class="w3-row w3-grayscale">
         <div class="w3-col l3 s6">
             <div class="w3-container">
-                <img src="/static/images/farm.png" th:src="@{images/farm.png}" style="width:100%" alt="">
+                <img alt="" src="/static/images/farm.png" style="width:100%" th:src="@{images/farm.png}">
                 <p class="w3-center">Quintas <b th:text="${funcionario.getIdEmpresa().getQuintaList().size()}"></b></p>
             </div>
             <div class="w3-container">
-                <img src="/static/images/vindima.png" th:src="@{images/vindima.png}" style="width:100%" alt="">
+                <img alt="" src="/static/images/vindima.png" style="width:100%" th:src="@{images/vindima.png}">
                 <p class="w3-center">Vindimas <b th:text="${plantacaoVindima.size()}"></b></p>
             </div>
         </div>
 
         <div class="w3-col l3 s6">
             <div class="w3-container">
-                <img src="/static/images/farmer.png" th:src="@{images/farmer.png}" style="width:100%" alt="">
+                <img alt="" src="/static/images/farmer.png" style="width:100%" th:src="@{images/farmer.png}">
                 <p class="w3-center">Funcionários <b th:text="${listFuncionario.size()}"></b></p>
             </div>
             <div class="w3-container">
-                <img src="/static/images/sucess.png" th:src="@{images/sucess.png}" style="width:80%" alt="">
+                <img alt="" src="/static/images/sucess.png" style="width:80%" th:src="@{images/sucess.png}">
                 <p class="w3-center">Controlos bem sucedidos <b th:text="${listControlo.size()}"></b></p>
             </div>
         </div>
 
         <div class="w3-col l3 s6">
             <div class="w3-container">
-                <img src="/static/images/vinhas.png" th:src="@{images/vinhas.png}" style="width:90%" alt="">
+                <img alt="" src="/static/images/vinhas.png" style="width:90%" th:src="@{images/vinhas.png}">
                 <p class="w3-center">Plantações ativas <b th:text="${plantacaoAtiva.size()}"></b></p>
             </div>
             <div class="w3-container">
-                <img src="/static/images/perc.png" th:src="@{images/perc.png}" style="width:90%" alt="">
+                <img alt="" src="/static/images/perc.png" style="width:90%" th:src="@{images/perc.png}">
                 <p class="w3-center">% de Controlos bem Sucedidos <b th:text="${controlosBemSUcedicos}"></b></p>
             </div>
         </div>
 
         <div class="w3-col l3 s6">
             <div class="w3-container">
-                <img src="/static/images/grape.png" th:src="@{images/grape.png}" style="width:100%" alt="">
+                <img alt="" src="/static/images/grape.png" style="width:100%" th:src="@{images/grape.png}">
                 <p class="w3-center">Castas <b th:text="${listaCastas.size()}"></b></p>
             </div>
             <div class="w3-container">
-                <img src="/static/images/box.png" th:src="@{images/box.png}" style="width:90%" alt="">
+                <img alt="" src="/static/images/box.png" style="width:90%" th:src="@{images/box.png}">
                 <p class="w3-center">Caixas Produzidas <b th:text="${listaProdutoFinal.getQtdCaixas}"></b></p>
             </div>
         </div>
@@ -101,9 +102,15 @@
     <!-- End page content -->
 </div>
 
-<script>
-    // Click on the "Jeans" link on page load to open the accordion for demo purposes
-    //document.getElementById("myBtn").click();
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null
+    };
 </script>
 
 </body>

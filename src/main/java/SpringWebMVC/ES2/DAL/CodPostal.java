@@ -5,43 +5,43 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author diogo
  */
 @Entity
 @Table(name = "COD_POSTAL")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "CodPostal.findAll", query = "SELECT c FROM CodPostal c"),
-    @NamedQuery(name = "CodPostal.findByIdCodpostal", query = "SELECT c FROM CodPostal c WHERE c.idCodpostal = :idCodpostal"),
-    @NamedQuery(name = "CodPostal.findByCodPostal", query = "SELECT c FROM CodPostal c WHERE c.codPostal = :codPostal")})
+        @NamedQuery(name = "CodPostal.findAll", query = "SELECT c FROM CodPostal c"),
+        @NamedQuery(name = "CodPostal.findByIdCodpostal", query = "SELECT c FROM CodPostal c WHERE c.idCodpostal = :idCodpostal"),
+        @NamedQuery(name = "CodPostal.findByCodPostal", query = "SELECT c FROM CodPostal c WHERE c.codPostal = :codPostal")})
 public class CodPostal implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cp_sequence")
+    @SequenceGenerator(name = "cp_sequence", sequenceName = "COD_POSTAL_SEQ", allocationSize = 1)
     @Column(name = "ID_CODPOSTAL")
     private BigDecimal idCodpostal;
     @Column(name = "COD_POSTAL")
     private String codPostal;
+    @JsonIgnore
     @OneToMany(mappedBy = "codPostal")
     private List<Funcionario> funcionarioList;
+    @JsonIgnore
     @OneToMany(mappedBy = "idCodpostal")
     private List<Empresa> empresaList;
 
@@ -100,15 +100,12 @@ public class CodPostal implements Serializable {
             return false;
         }
         CodPostal other = (CodPostal) object;
-        if ((this.idCodpostal == null && other.idCodpostal != null) || (this.idCodpostal != null && !this.idCodpostal.equals(other.idCodpostal))) {
-            return false;
-        }
-        return true;
+        return (this.idCodpostal != null || other.idCodpostal == null) && (this.idCodpostal == null || this.idCodpostal.equals(other.idCodpostal));
     }
 
     @Override
     public String toString() {
         return "SpringWebMVC.ES2.DAL.CodPostal[ idCodpostal=" + idCodpostal + " ]";
     }
-    
+
 }

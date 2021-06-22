@@ -16,9 +16,7 @@ public class PlantacaoVindima {
         List<SpringWebMVC.ES2.DAL.PlantacaoVindima> listaPlantacaoVindimas = new ArrayList<>();
 
         Query q = em.createNamedQuery("PlantacaoVindima.findAll");
-        q.getResultList().forEach(pv -> {
-            listaPlantacaoVindimas.add((SpringWebMVC.ES2.DAL.PlantacaoVindima) pv);
-        });
+        q.getResultList().forEach(pv -> listaPlantacaoVindimas.add((SpringWebMVC.ES2.DAL.PlantacaoVindima) pv));
         return listaPlantacaoVindimas;
     }
 
@@ -26,10 +24,8 @@ public class PlantacaoVindima {
         List<Object> listaPlantVindima = new ArrayList<>();
 
         Query q = em.createNamedQuery("PlantacaoVindima.findByFuncionarioAndEmpresa");
-        q.setParameter("idEmpresa",idEmpresa);
-        q.getResultList().forEach(pv -> {
-            listaPlantVindima.add(pv);
-        });
+        q.setParameter("idEmpresa", idEmpresa);
+        q.getResultList().forEach(pv -> listaPlantVindima.add(pv));
 
         return listaPlantVindima;
 

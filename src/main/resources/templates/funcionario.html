@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Funcionário</title>
+    <link href="https://www.w3schools.com/w3css/4/w3.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script crossorigin="anonymous"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <link crossorigin="anonymous" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+          integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" rel="stylesheet"/>
+
+    <style>
+        .w3-sidebar a {
+            font-family: "Roboto", sans-serif
+        }
+
+        body, h1, h2, h3, h4, h5, h6, .w3-wide {
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .tableFixHead {
+            overflow-y: auto;
+            height: 400px;
+        }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 8px 16px;
+            border: 1px solid #ccc;
+        }
+
+        th {
+            background: #eee;
+        }
+
+
+    </style>
+</head>
+<body class="w3-content" style="max-width:1200px">
+
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" id="mySidebar" style="z-index:3;width:250px">
+    <div class="w3-container w3-display-container w3-padding-16">
+        <h3 class="w3-wide"><b>MENU</b></h3></div>
+    <div class="w3-padding-20 w3-large w3-text-grey" style="font-weight:bold">
+        <a class="w3-bar-item w3-button" href="/quinta">Quintas</a>
+        <a class="w3-bar-item w3-button" href="#">Funcionários</a>
+        <a class="w3-bar-item w3-button" href="#">Plantações</a>
+        <a class="w3-bar-item w3-button" href="#">Vindimas</a>
+        <a class="w3-bar-item w3-button" href="#">Controlos</a>
+        <a class="w3-bar-item w3-button" href="#">Avaliações</a>
+        <a class="w3-bar-item w3-button" href="#">Embalamentos</a>
+        <a class="w3-bar-item w3-button w3-margin-top" href="/dashboard">Página Inicial</a>
+        <a class="w3-bar-item w3-button w3-margin-top" href="/logout">Logout</a>
+    </div>
+</nav>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:250px">
+
+    <!-- Push down content on small screens -->
+    <div class="w3-hide-large" style="margin-top:83px"></div>
+
+    <!-- Top header -->
+    <header class="w3-container w3-xlarge">
+        <p class="w3-center">
+            <strong>Funcionários</strong>
+        </p>
+    </header>
+
+    <!-- Fixed header table-->
+    <div class="tableFixHead w3-margin-bottom">
+        <table>
+            <thead>
+            <tr>
+                <th>Num</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Mail</th>
+                <th>Username</th>
+                <th>Estado</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="funcionario : ${listaFuncionarios}">
+                <tr>
+                    <td th:text="${funcionario.getIdFuncionario()}"></td>
+                    <td th:text="${funcionario.getNome()}"></td>
+                    <td th:text="${funcionario.getTipoFuncionario().getCargo()}"></td>
+                    <td th:text="${funcionario.getEmail()}"></td>
+                    <td th:text="${funcionario.getUsername()}"></td>
+                    <td th:text="${funcionario.getEstado()}"></td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </div><!-- End -->
+
+    <div class="w3-modal" id="idAdd">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal">
+        <span class="w3-button w3-display-topright"
+              onclick="closeModal()">&times;</span>
+                <h2 class="w3-center">Adicionar Funcionário</h2>
+            </header>
+            <div class="w3-container w3-padding-64">
+                <form action="/addFuncionario" id="formAdd" method="post" name="formAdd"
+                      onsubmit="return validateForm()">
+                    <input id="idEmpresa" name="idEmpresa" th:value="${listaFuncionarios.get(0).getIdEmpresa().getIdEmpresa()}"
+                           type="hidden">
+                    <div class="form-group">
+                        <label for="selectTipoFuncionario">Cargo</label>
+                        <select class="form-control" id="selectTipoFuncionario" name="selectTipoFuncionario">
+                            <th:block th:each="cargo : ${listaCargos}">
+                                <option th:text="${cargo.getCargo()}"
+                                        th:value="${cargo.getId()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" name="username" placeholder="Insira um username"
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" id="password" name="password" placeholder="Password"
+                               type="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input class="form-control" id="nome" name="nome" placeholder="Nome"
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input class="form-control" id="email" name="email" placeholder="Email"
+                               type="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="tlm">Telemóvel</label>
+                        <input class="form-control" id="tlm" name="tlm" placeholder="Telemóvel"
+                               type="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="rua">Rua</label>
+                        <input class="form-control" id="rua" name="rua" placeholder="Rua"
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="porta">Porta</label>
+                        <input class="form-control" id="porta" name="porta" placeholder="Porta"
+                               type="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="codPostal">Código Postal</label>
+                        <input class="form-control" id="codPostal" name="codPostal" placeholder="Código Postal"
+                               type="text">
+                    </div>
+                    <button class="btn btn-success" type="submit">Adicionar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-modal" id="idEdit">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal">
+        <span class="w3-button w3-display-topright"
+              onclick="closeModalEdit()">&times;</span>
+                <h2 class="w3-center">Editar Funcionário</h2>
+            </header>
+            <div class="w3-container w3-padding-64">
+                <form action="/updateFuncionario" id="formEdit" method="post" name="formEdit"
+                      onsubmit="return validateFormEdit()">
+                    <div class="form-group">
+                        <label for="selectFuncionario">Funcionário</label>
+                        <select class="form-control" id="selectFuncionario" name="selectFuncionario"
+                                th:onchange="'changeFuncionario()'">
+                            <th:block th:each="funcionario : ${listaFuncionarios}">
+                                <option th:text="${funcionario.getUsername()}"
+                                        th:value="${funcionario.getIdFuncionario()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectTipoFuncionarioEdit">Cargo</label>
+                        <select class="form-control" id="selectTipoFuncionarioEdit" name="selectTipoFuncionarioEdit">
+                            <th:block th:each="funcionario : ${listaFuncionarios}">
+                                <option th:text="${funcionario.getTipoFuncionario().getCargo()}"
+                                        th:value="${funcionario.getTipoFuncionario().getId()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="usernameEdit">Username</label>
+                        <input class="form-control" disabled id="usernameEdit" name="usernameEdit"
+                               placeholder="Insira um username" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordEdit">Password</label>
+                        <input class="form-control" id="passwordEdit" name="passwordEdit" placeholder="Password"
+                               type="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeEdit">Nome</label>
+                        <input class="form-control" id="nomeEdit" name="nomeEdit" placeholder="Nome"
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="emailEdit">Email</label>
+                        <input class="form-control" id="emailEdit" name="emailEdit" placeholder="Email"
+                               type="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="tlmEdit">Telemóvel</label>
+                        <input class="form-control" id="tlmEdit" name="tlmEdit" placeholder="Telemóvel"
+                               type="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="ruaEdit">Rua</label>
+                        <input class="form-control" id="ruaEdit" name="ruaEdit" placeholder="Rua"
+                               type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="portaEdit">Porta</label>
+                        <input class="form-control" id="portaEdit" name="portaEdit" placeholder="Porta"
+                               type="number">
+                    </div>
+                    <div class="form-group">
+                        <label for="codPostalEdit">Código Postal</label>
+                        <input class="form-control" id="codPostalEdit" name="codPostalEdit" placeholder="Código Postal"
+                               type="text">
+                    </div>
+                    <button class="btn btn-success" type="submit">Editar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-modal" id="idRemove">
+        <div class="w3-modal-content w3-card-4">
+            <header class="w3-container w3-teal">
+        <span class="w3-button w3-display-topright"
+              onclick="closeModalRemove()">&times;</span>
+                <h2 class="w3-center">Remover Funcionário</h2>
+            </header>
+            <div class="w3-container w3-padding-64">
+                <form action="/removeFuncionario" id="formRemove" method="post"
+                      name="formRemove">
+                    <div class="form-group">
+                        <label for="selectFuncionarioRemove">Funcionário</label>
+                        <select class="form-control" id="selectFuncionarioRemove" name="selectFuncionarioRemove">
+                            <th:block th:each="funcionario : ${listaFuncionarios}">
+                                <option th:text="${funcionario.getUsername()}"
+                                        th:value="${funcionario.getIdFuncionario()}"></option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <button class="btn btn-success" type="submit">Remover</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="w3-center w3-margin-bottom">
+        <button class="w3-btn w3-ripple w3-green w3-round w3-margin-bottom"
+                onclick="openModalAdd()">Adicionar Funcionário
+        </button>
+        <button class="w3-btn w3-ripple w3-blue w3-round w3-margin-bottom"
+                onclick="openModalEdit()">Editar Funcionário
+        </button>
+        <button class="w3-btn w3-ripple w3-red w3-round w3-margin-bottom" onclick="openModalRemove()">Remover
+            Funcionário
+        </button>
+    </div>
+
+    <div class="w3-black w3-center w3-padding-24">Powered by <b>Diogo Mota Nº20778 & Hugo Simão Nº20752</b>
+    </div>
+
+</div>
+
+<script th:inline="javascript">
+    //<![CDATA[
+    const listaJSON = /*[[${listaFuncionarios}]]*/'Funcionarios';
+    //]]>
+    const JSON_Stringify = JSON.stringify(listaJSON);
+</script>
+
+<script>
+    function validateForm() {
+        let usr, pw, name, mail, tlm, rua, porta, cp;
+
+        usr = document.getElementById("username").value;
+        pw = document.getElementById("password").value;
+        name = document.getElementById("nome").value;
+        mail = document.getElementById("email").value;
+        tlm = document.getElementById("tlm").value;
+        rua = document.getElementById("rua").value;
+        porta = document.getElementById("porta").value;
+        cp = document.getElementById("codPostal").value;
+        const pattern = /[0-9]{4}-[0-9]{3}/g;
+
+        if (usr == "" || pw == "" || name == "" || mail == "" || tlm == "" || rua == "" || porta == "" || cp == "") {
+            alert("Todos os campos devem ser preenchidos!");
+            return false;
+        } else if (pw.length < 6) {
+            alert("A password deve ter mais que 6 caracteres!");
+            return false;
+        } else if (!pattern.test(cp)) {
+            alert("Deve introduzir um código postal válido!");
+            return false;
+        }
+    }
+
+    function validateFormEdit() {
+        let usr, pw, name, mail, tlm, rua, porta, cp;
+
+        usr = document.getElementById("usernameEdit").value;
+        pw = document.getElementById("passwordEdit").value;
+        name = document.getElementById("nomeEdit").value;
+        mail = document.getElementById("emailEdit").value;
+        tlm = document.getElementById("tlmEdit").value;
+        rua = document.getElementById("ruaEdit").value;
+        porta = document.getElementById("portaEdit").value;
+        cp = document.getElementById("codPostalEdit").value;
+        const pattern = /[0-9]{4}-[0-9]{3}/g;
+
+        if (usr == "" || pw == "" || name == "" || mail == "" || tlm == "" || rua == "" || porta == "" || cp == "") {
+            alert("Todos os campos devem ser preenchidos!");
+            return false;
+        } else if (!pattern.test(cp)) {
+            alert("Deve introduzir um código postal válido!");
+            return false;
+        }
+    }
+
+    function openModalAdd() {
+        document.getElementById('idAdd').style.display = 'block'
+    }
+
+    function closeModal() {
+        document.getElementById('idAdd').style.display = 'none';
+        document.getElementById("formAdd").reset();
+    }
+
+    function closeModalEdit() {
+        document.getElementById('idEdit').style.display = 'none';
+        document.getElementById("formEdit").reset();
+    }
+
+    function openModalRemove() {
+        document.getElementById('idRemove').style.display = 'block';
+    }
+
+    function closeModalRemove() {
+        document.getElementById('idRemove').style.display = 'none';
+    }
+
+
+    let idFuncionarioSelected = document.getElementById("selectFuncionario");
+    let cargo = document.getElementById("selectTipoFuncionarioEdit");
+    const usr = document.getElementById("usernameEdit")
+    const pw = document.getElementById("passwordEdit");
+    const nome = document.getElementById("nomeEdit");
+    const mail = document.getElementById("emailEdit");
+    const tlm = document.getElementById("tlmEdit");
+    const rua = document.getElementById("ruaEdit");
+    const porta = document.getElementById("portaEdit");
+    const cp = document.getElementById("codPostalEdit");
+    const lista = JSON.parse(JSON_Stringify);
+
+    function openModalEdit() {
+        document.getElementById('idEdit').style.display = 'block'
+
+        for (let i = 0; i < lista.length; i++) {
+            if (idFuncionarioSelected.value == lista[i]["idFuncionario"]) {
+                usr.value = lista[i]["username"];
+                pw.value = lista[i]["pw"];
+                nome.value = lista[i]["nome"];
+                mail.value = lista[i]["email"];
+                tlm.value = lista[i]["tlm"];
+                rua.value = lista[i]["rua"];
+                porta.value = lista[i]["nporta"];
+                cp.value = lista[i]["codPostal"]["codPostal"];
+                cargo.value = lista[i]["tipoFuncionario"]["id"];
+            }
+        }
+    }
+
+    function changeFuncionario() {
+        for (let i = 0; i < lista.length; i++) {
+            if (idFuncionarioSelected.value == lista[i]["idFuncionario"]) {
+                usr.value = lista[i]["username"];
+                pw.value = lista[i]["pw"];
+                nome.value = lista[i]["nome"];
+                mail.value = lista[i]["email"];
+                tlm.value = lista[i]["tlm"];
+                rua.value = lista[i]["rua"];
+                porta.value = lista[i]["nporta"];
+                cp.value = lista[i]["codPostal"]["codPostal"];
+                cargo.value = lista[i]["tipoFuncionario"]["id"];
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

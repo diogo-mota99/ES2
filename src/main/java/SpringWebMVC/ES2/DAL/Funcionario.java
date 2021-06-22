@@ -5,9 +5,12 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,13 +32,18 @@ import java.util.List;
         @NamedQuery(name = "Funcionario.findByTlm", query = "SELECT f FROM Funcionario f WHERE f.tlm = :tlm"),
         @NamedQuery(name = "Funcionario.findByUsername", query = "SELECT f FROM Funcionario f WHERE f.username = :username"),
         @NamedQuery(name = "Funcionario.findByUsernamePw", query = "SELECT f FROM Funcionario f WHERE f.username = :username AND f.pw = :pw"),
-        @NamedQuery(name = "Funcionario.findByEmpresa", query = "SELECT f FROM Funcionario f WHERE f.idEmpresa.idEmpresa = :idEmpresa")})
+        @NamedQuery(name = "Funcionario.findByEmpresa", query = "SELECT f FROM Funcionario f WHERE f.idEmpresa.idEmpresa = :idEmpresa"),
+        @NamedQuery(name = "Funcionario.findByEmpresaByEstado", query = "SELECT f FROM Funcionario f WHERE f.idEmpresa.idEmpresa = :idEmpresa and f.estado = :estado"),
+})
 public class Funcionario implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "funcionario_sequence")
+    @SequenceGenerator(name = "funcionario_sequence", sequenceName = "FUNCIONARIO_SEQ", allocationSize = 1)
     @Column(name = "ID_FUNCIONARIO")
     private int idFuncionario;
     @Column(name = "EMAIL")
@@ -54,20 +62,23 @@ public class Funcionario implements Serializable {
     private String tlm;
     @Column(name = "USERNAME")
     private String username;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncionario", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncionario")
     private List<Plantacao> plantacaoList;
     @JoinColumn(name = "COD_POSTAL", referencedColumnName = "ID_CODPOSTAL")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private CodPostal codPostal;
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Empresa idEmpresa;
     @JoinColumn(name = "TIPO_FUNCIONARIO", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private TipoFuncionario tipoFuncionario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncionario", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFuncionario")
     private List<Controlo> controloList;
-    @OneToMany(mappedBy = "idFuncionario", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "idFuncionario")
     private List<PlantacaoVindima> plantacaoVindimaList;
 
     public Funcionario() {

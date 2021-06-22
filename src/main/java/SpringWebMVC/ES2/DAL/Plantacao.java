@@ -5,36 +5,28 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author diogo
  */
 @Entity
 @Table(name = "PLANTACAO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Plantacao.findAll", query = "SELECT p FROM Plantacao p"),
-    @NamedQuery(name = "Plantacao.findByIdPlantacao", query = "SELECT p FROM Plantacao p WHERE p.idPlantacao = :idPlantacao"),
-    @NamedQuery(name = "Plantacao.findByAreaCasta", query = "SELECT p FROM Plantacao p WHERE p.areaCasta = :areaCasta"),
-    @NamedQuery(name = "Plantacao.findByEstado", query = "SELECT p FROM Plantacao p WHERE p.estado = :estado"),
-    @NamedQuery(name = "Plantacao.findByEmpresaByEstado", query = "SELECT p, f FROM Plantacao p, Funcionario f WHERE f.idEmpresa.idEmpresa = :idEmpresa AND f.idFuncionario = p.idFuncionario.idFuncionario AND p.estado = 1")})
+        @NamedQuery(name = "Plantacao.findAll", query = "SELECT p FROM Plantacao p"),
+        @NamedQuery(name = "Plantacao.findByIdPlantacao", query = "SELECT p FROM Plantacao p WHERE p.idPlantacao = :idPlantacao"),
+        @NamedQuery(name = "Plantacao.findByAreaCasta", query = "SELECT p FROM Plantacao p WHERE p.areaCasta = :areaCasta"),
+        @NamedQuery(name = "Plantacao.findByEstado", query = "SELECT p FROM Plantacao p WHERE p.estado = :estado"),
+        @NamedQuery(name = "Plantacao.findByEmpresaByEstado", query = "SELECT p, f FROM Plantacao p, Funcionario f WHERE f.idEmpresa.idEmpresa = :idEmpresa AND f.idFuncionario = p.idFuncionario.idFuncionario AND p.estado = 1")})
 public class Plantacao implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,15 +39,19 @@ public class Plantacao implements Serializable {
     private String areaCasta;
     @Column(name = "ESTADO")
     private BigInteger estado;
+    @JsonIgnore
     @JoinColumn(name = "ID_CASTA", referencedColumnName = "ID_CASTA")
     @ManyToOne(optional = false)
     private Casta idCasta;
+    @JsonIgnore
     @JoinColumn(name = "ID_FUNCIONARIO", referencedColumnName = "ID_FUNCIONARIO")
     @ManyToOne(optional = false)
     private Funcionario idFuncionario;
+    @JsonIgnore
     @JoinColumn(name = "ID_QUINTA", referencedColumnName = "ID_QUINTA")
     @ManyToOne(optional = false)
     private Quinta idQuinta;
+    @JsonIgnore
     @OneToMany(mappedBy = "idPlantacao")
     private List<PlantacaoVindima> plantacaoVindimaList;
 
@@ -137,15 +133,12 @@ public class Plantacao implements Serializable {
             return false;
         }
         Plantacao other = (Plantacao) object;
-        if ((this.idPlantacao == null && other.idPlantacao != null) || (this.idPlantacao != null && !this.idPlantacao.equals(other.idPlantacao))) {
-            return false;
-        }
-        return true;
+        return (this.idPlantacao != null || other.idPlantacao == null) && (this.idPlantacao == null || this.idPlantacao.equals(other.idPlantacao));
     }
 
     @Override
     public String toString() {
         return "SpringWebMVC.ES2.DAL.Plantacao[ idPlantacao=" + idPlantacao + " ]";
     }
-    
+
 }

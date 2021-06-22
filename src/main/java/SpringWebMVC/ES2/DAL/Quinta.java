@@ -5,6 +5,8 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -23,15 +25,17 @@ import java.util.List;
         @NamedQuery(name = "Quinta.findByIdQuinta", query = "SELECT q FROM Quinta q WHERE q.idQuinta = :idQuinta"),
         @NamedQuery(name = "Quinta.findByAreaQuinta", query = "SELECT q FROM Quinta q WHERE q.areaQuinta = :areaQuinta"),
         @NamedQuery(name = "Quinta.findByAtiva", query = "SELECT q FROM Quinta q WHERE q.ativa = :ativa"),
-        @NamedQuery(name = "Quinta.findByLocalizacao", query = "SELECT q FROM Quinta q WHERE q.localizacao = :localizacao")})
+        @NamedQuery(name = "Quinta.findByLocalizacao", query = "SELECT q FROM Quinta q WHERE q.localizacao = :localizacao"),
+        @NamedQuery(name = "Quinta.findByEmpresa", query = "SELECT q FROM Quinta q WHERE q.idEmpresa.idEmpresa = :idEmpresa"),
+        @NamedQuery(name = "Quinta.findByEmpresaByEstado", query = "SELECT q FROM Quinta q WHERE q.idEmpresa.idEmpresa = :idEmpresa AND q.ativa = :ativa")})
 public class Quinta implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
-    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="quinta_sequence")
-    @SequenceGenerator(name="quinta_sequence", sequenceName="QUINTA_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "quinta_sequence")
+    @SequenceGenerator(name = "quinta_sequence", sequenceName = "QUINTA_SEQ", allocationSize = 1)
     @Basic(optional = false)
     @Column(name = "ID_QUINTA")
     private int idQuinta;
@@ -41,8 +45,10 @@ public class Quinta implements Serializable {
     private int ativa;
     @Column(name = "LOCALIZACAO")
     private String localizacao;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idQuinta")
     private List<Plantacao> plantacaoList;
+    @JsonIgnore
     @JoinColumn(name = "ID_EMPRESA", referencedColumnName = "ID_EMPRESA")
     @ManyToOne
     private Empresa idEmpresa;

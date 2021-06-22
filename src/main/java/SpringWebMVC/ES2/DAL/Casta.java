@@ -5,34 +5,29 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
- *
  * @author diogo
  */
 @Entity
 @Table(name = "CASTA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Casta.findAll", query = "SELECT c FROM Casta c"),
-    @NamedQuery(name = "Casta.findByIdCasta", query = "SELECT c FROM Casta c WHERE c.idCasta = :idCasta"),
-    @NamedQuery(name = "Casta.findByTipoCasta", query = "SELECT c FROM Casta c WHERE c.tipoCasta = :tipoCasta")})
+        @NamedQuery(name = "Casta.findAll", query = "SELECT c FROM Casta c"),
+        @NamedQuery(name = "Casta.findByIdCasta", query = "SELECT c FROM Casta c WHERE c.idCasta = :idCasta"),
+        @NamedQuery(name = "Casta.findByTipoCasta", query = "SELECT c FROM Casta c WHERE c.tipoCasta = :tipoCasta")})
 public class Casta implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Id
@@ -41,6 +36,7 @@ public class Casta implements Serializable {
     private BigDecimal idCasta;
     @Column(name = "TIPO_CASTA")
     private String tipoCasta;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCasta")
     private List<Plantacao> plantacaoList;
 
@@ -90,15 +86,12 @@ public class Casta implements Serializable {
             return false;
         }
         Casta other = (Casta) object;
-        if ((this.idCasta == null && other.idCasta != null) || (this.idCasta != null && !this.idCasta.equals(other.idCasta))) {
-            return false;
-        }
-        return true;
+        return (this.idCasta != null || other.idCasta == null) && (this.idCasta == null || this.idCasta.equals(other.idCasta));
     }
 
     @Override
     public String toString() {
         return "SpringWebMVC.ES2.DAL.Casta[ idCasta=" + idCasta + " ]";
     }
-    
+
 }

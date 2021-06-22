@@ -7,21 +7,24 @@ package SpringWebMVC.ES2.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-
 /**
- *
  * @author diogo
  */
 @Controller
 public class HomeController {
 
-    @RequestMapping({"/", "/index"})
-    public ModelAndView home(HttpServletResponse response) throws IOException {
-        return new ModelAndView("index");
+    @GetMapping({"/", "/index"})
+    public ModelAndView home() {
+        ModelAndView mview;
+
+        if (DashboardController.f == null) {
+            mview = new ModelAndView("index");
+        } else {
+            mview = new ModelAndView("redirect:/dashboard");
+        }
+
+        return mview;
     }
 }

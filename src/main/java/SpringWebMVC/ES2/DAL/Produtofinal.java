@@ -5,6 +5,8 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -42,6 +44,7 @@ public class Produtofinal implements Serializable {
     private BigInteger qtdCaixas;
     @Column(name = "TIPO_VINHO")
     private String tipoVinho;
+    @JsonIgnore
     @OneToMany(mappedBy = "idProdutoFinal")
     private List<Avaliacao> avaliacaoList;
 
@@ -107,10 +110,7 @@ public class Produtofinal implements Serializable {
             return false;
         }
         Produtofinal other = (Produtofinal) object;
-        if ((this.idProdutoFinal == null && other.idProdutoFinal != null) || (this.idProdutoFinal != null && !this.idProdutoFinal.equals(other.idProdutoFinal))) {
-            return false;
-        }
-        return true;
+        return (this.idProdutoFinal != null || other.idProdutoFinal == null) && (this.idProdutoFinal == null || this.idProdutoFinal.equals(other.idProdutoFinal));
     }
 
     @Override

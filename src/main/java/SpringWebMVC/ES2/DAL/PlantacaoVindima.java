@@ -5,6 +5,8 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,16 +40,20 @@ public class PlantacaoVindima implements Serializable {
     private Date dataFimVindima;
     @Column(name = "QTD_VINDIMADA")
     private float qtdVindimada;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPlantVindima", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPlantVindima")
     private List<Controlo> controloList;
+    @JsonIgnore
     @JoinColumn(name = "ID_FUNCIONARIO", referencedColumnName = "ID_FUNCIONARIO")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Funcionario idFuncionario;
+    @JsonIgnore
     @JoinColumn(name = "ID_PLANTACAO", referencedColumnName = "ID_PLANTACAO")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Plantacao idPlantacao;
+    @JsonIgnore
     @JoinColumn(name = "ID_VINDIMA", referencedColumnName = "ID_VINDIMA")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Vindima idVindima;
 
     public PlantacaoVindima() {

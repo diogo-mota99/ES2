@@ -15,9 +15,7 @@ public class Casta {
         List<SpringWebMVC.ES2.DAL.Casta> listaCastas = new ArrayList<>();
 
         Query q = em.createNamedQuery("Casta.findAll");
-        q.getResultList().forEach(c -> {
-            listaCastas.add((SpringWebMVC.ES2.DAL.Casta) c);
-        });
+        q.getResultList().forEach(c -> listaCastas.add((SpringWebMVC.ES2.DAL.Casta) c));
 
         return listaCastas;
 

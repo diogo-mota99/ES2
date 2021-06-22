@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author diogo
@@ -21,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginController {
 
     @PostMapping("/login")
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response, RedirectAttributes redirectAttributes) throws Exception {
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
@@ -30,8 +29,8 @@ public class LoginController {
                 username, password
         );
 
-        ModelAndView mview = null;
-        String msg = "";
+        ModelAndView mview;
+        String msg;
 
         if (funcionario == null) {
             msg = "Username ou password errados!";

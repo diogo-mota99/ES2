@@ -5,6 +5,8 @@
  */
 package SpringWebMVC.ES2.DAL;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
@@ -43,14 +45,17 @@ public class Controlo implements Serializable {
     private int resultado;
     @Column(name = "TEMPERATURA")
     private float temperatura;
+    @JsonIgnore
     @JoinColumn(name = "ID_AVALIACAO", referencedColumnName = "ID_AVALIACAO")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private Avaliacao idAvaliacao;
+    @JsonIgnore
     @JoinColumn(name = "ID_FUNCIONARIO", referencedColumnName = "ID_FUNCIONARIO")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private Funcionario idFuncionario;
+    @JsonIgnore
     @JoinColumn(name = "ID_PLANT_VINDIMA", referencedColumnName = "ID_PLANT_VINDIMA")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
     private PlantacaoVindima idPlantVindima;
 
     public Controlo() {

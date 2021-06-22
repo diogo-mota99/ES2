@@ -14,7 +14,12 @@ public class Produtofinal {
 
         Query q = em.createNamedQuery("Produtofinal.findByEmpresa");
         q.setParameter("idEmpresa", idEmpresa);
-        produtoFinal = (SpringWebMVC.ES2.DAL.Produtofinal) q.getSingleResult();
+
+        try {
+            produtoFinal = (SpringWebMVC.ES2.DAL.Produtofinal) q.getSingleResult();
+        } catch (Exception e) {
+            return null;
+        }
 
         return produtoFinal;
 

@@ -5,30 +5,29 @@
  */
 package SpringWebMVC.ES2.DAL;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import java.io.Serializable;
+import java.util.List;
 
 /**
- *
  * @author diogo
  */
 @Entity
 @Table(name = "EMPRESA")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e"),
-    @NamedQuery(name = "Empresa.findByIdEmpresa", query = "SELECT e FROM Empresa e WHERE e.idEmpresa = :idEmpresa"),
-    @NamedQuery(name = "Empresa.findByCae", query = "SELECT e FROM Empresa e WHERE e.cae = :cae"),
-    @NamedQuery(name = "Empresa.findByNif", query = "SELECT e FROM Empresa e WHERE e.nif = :nif"),
-    @NamedQuery(name = "Empresa.findByNomeEmpresa", query = "SELECT e FROM Empresa e WHERE e.nomeEmpresa = :nomeEmpresa"),
-    @NamedQuery(name = "Empresa.findByNporta", query = "SELECT e FROM Empresa e WHERE e.nporta = :nporta"),
-    @NamedQuery(name = "Empresa.findByPassword", query = "SELECT e FROM Empresa e WHERE e.password = :password"),
-    @NamedQuery(name = "Empresa.findByRua", query = "SELECT e FROM Empresa e WHERE e.rua = :rua")})
+        @NamedQuery(name = "Empresa.findAll", query = "SELECT e FROM Empresa e"),
+        @NamedQuery(name = "Empresa.findByIdEmpresa", query = "SELECT e FROM Empresa e WHERE e.idEmpresa = :idEmpresa"),
+        @NamedQuery(name = "Empresa.findByCae", query = "SELECT e FROM Empresa e WHERE e.cae = :cae"),
+        @NamedQuery(name = "Empresa.findByNif", query = "SELECT e FROM Empresa e WHERE e.nif = :nif"),
+        @NamedQuery(name = "Empresa.findByNomeEmpresa", query = "SELECT e FROM Empresa e WHERE e.nomeEmpresa = :nomeEmpresa"),
+        @NamedQuery(name = "Empresa.findByNporta", query = "SELECT e FROM Empresa e WHERE e.nporta = :nporta"),
+        @NamedQuery(name = "Empresa.findByPassword", query = "SELECT e FROM Empresa e WHERE e.password = :password"),
+        @NamedQuery(name = "Empresa.findByRua", query = "SELECT e FROM Empresa e WHERE e.rua = :rua")})
 public class Empresa implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,12 +48,15 @@ public class Empresa implements Serializable {
     private String password;
     @Column(name = "RUA")
     private String rua;
-    @OneToMany(mappedBy = "idEmpresa", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "idEmpresa")
     private List<Funcionario> funcionarioList;
+    @JsonIgnore
     @JoinColumn(name = "ID_CODPOSTAL", referencedColumnName = "ID_CODPOSTAL")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private CodPostal idCodpostal;
-    @OneToMany(mappedBy = "idEmpresa", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @OneToMany(mappedBy = "idEmpresa")
     private List<Quinta> quintaList;
 
     public Empresa() {
@@ -170,5 +172,5 @@ public class Empresa implements Serializable {
     public String toString() {
         return "SpringWebMVC.ES2.DAL.Empresa[ idEmpresa=" + idEmpresa + " ]";
     }
-    
+
 }
